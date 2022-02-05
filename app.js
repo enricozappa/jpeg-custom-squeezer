@@ -1,9 +1,12 @@
-const path = require('path'),
-        fs = require('fs'),
-        sharp = require('sharp')
+const path = require('path');
+const fs = require('fs');
+const sharp = require('sharp');
+
+// console.log(process.argv); //TODO: pass arguments from CLI
 
 // Get images path
 const sourcePath = path.join(__dirname, 'images');
+const destinationPath = path.join(__dirname, 'output');
 
 // Read images path
 fs.readdir(sourcePath, (err, files) => {
@@ -12,39 +15,39 @@ fs.readdir(sourcePath, (err, files) => {
     
     // Parse files
     if (files.length) {
-        // FIXME: check only for images and count them
-        // Ignore DS_Store on files count
-        const totalFiles = files[0] == '.DS_store' ? files.length - 1 : files.length;
+        // Store all images (jpegs)
+        const images = Object.values(files).filter(file => file.split('.')[1] == 'jpg');
 
-        console.log(`Processing ${totalFiles} files... \n`)
+        if (images.length) {
+            console.log(`Processing ${images.length} files... \n`);
 
-        files.forEach(file => {
-            // Get file path, name, buffer and stats
-            const fileName = file.split('.')[0];
-            const filePath = `${sourcePath}/${file}`;
-            const fileBuffer = fs.readFileSync(filePath);
-            const fileStats = fs.statSync(filePath);
-            
-            // console.log(file, formatBytes(fileStats.size), fileBuffer);
-
-            if (file != '.DS_Store') { //FIXME: check for images
+            images.forEach(file => {
+                // Get file path, name, buffer and stats
+                const fileName = file.split('.')[0];
+                const filePath = `${sourcePath}/${file}`;
+                const fileBuffer = fs.readFileSync(filePath);
+                const fileStats = fs.statSync(filePath);
+    
+                // Compress image
                 sharp(fileBuffer)
                 .jpeg({
                     quality: 90,
                     chromaSubsampling: '4:2:0'
                 })
-                .resize(1500) //TODO: get size from % of source image width
-                .toFile(`${fileName}.jpg`, (err, info) => { //TODO: put processed files in a folder
+                .resize(1400) //TODO: get size from % of source image width
+                .toFile(`${destinationPath}/${fileName}.jpg`, (err, info) => {
                     if (err)
                         return console.log(`Unable to process file ${file}: ${err}`);
     
-                    console.log(`Filename ${file}`);
+                    console.log(`Filename: ${file}`);
                     console.log(`${formatBytes(fileStats.size)} => ${formatBytes(info.size)} \n`);
                 });
-            }
-        });
+            });
+        } else {
+            console.log('\nNo jpegs found \n');
+        }
     } else {
-        console.log('Folder is empty');
+        console.log('\nImages folder is empty \n');
     }
 });
 
