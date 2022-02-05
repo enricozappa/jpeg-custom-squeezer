@@ -4,9 +4,10 @@ I'm developing this image compressor (actually works only with jpegs) for educat
 How to use:
 
 1. Clone this repository
-2. Install the most recent LTS Node version
-3. Install NPM
-4. Inside the project folder, launch `npm install` from the command line
-5. Put uncompressed jpegs inside **images** folder
-6. Launch `node app.js` from the command line
-7. Compressed images will be available inside the folder **output**
+ 1a. Install the most recent LTS Node Version
+ 1b. Install NPM
+2. Inside the project folder, launch `npm install` from the command line
+3. Put uncompressed jpegs inside **images** folder
+4. Launch `node app.js` from the command line
+
+Compressed images will be available inside the folder **output**
