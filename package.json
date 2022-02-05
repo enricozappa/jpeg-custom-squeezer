@@ -1,0 +1,24 @@
+{
+  "name": "custom-image-compressor",
+  "version": "1.0.0",
+  "description": "Custom image compressor, where you can set desired image size.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enricozappa/custom-image-compressor.git"
+  },
+  "author": "Enrico Zappalà",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/enricozappa/custom-image-compressor/issues"
+  },
+  "homepage": "https://github.com/enricozappa/custom-image-compressor#readme",
+  "dependencies": {
+    "imagemin": "^8.0.1",
+    "imagemin-jpegtran": "^7.0.0",
+    "sharp": "^0.30.0"
+  }
+}

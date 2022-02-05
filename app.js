@@ -1,25 +1,47 @@
-const path = require('path');
-const fs = require('fs');
+const path = require('path'),
+        fs = require('fs'),
+        sharp = require('sharp')
 
-// Join directory path
-const directoryPath = path.join(__dirname, 'images');
+// Get images path
+const sourcePath = path.join(__dirname, 'images');
 
-// Pass directory path and callback function
-fs.readdir(directoryPath, (err, files) => {
-    // Error handling
-    if (err) {
-        return console.log('Unable to scan directory: ' + err);
-    }
+// Read images path
+fs.readdir(sourcePath, (err, files) => {
+    if (err)
+        return console.log(`Unable to scan directory: ${err}`);
     
     // Parse files
     if (files.length) {
-        files.forEach(file => {
-            let filePath = `${directoryPath}/${file}`;
+        // FIXME: check only for images and count them
+        // Ignore DS_Store on files count
+        const totalFiles = files[0] == '.DS_store' ? files.length - 1 : files.length;
 
-            // Get file size
-            let stats = fs.statSync(filePath);
-            console.log(file, formatBytes(stats.size));
-            //TODO: compress files
+        console.log(`Processing ${totalFiles} files... \n`)
+
+        files.forEach(file => {
+            // Get file path, name, buffer and stats
+            const fileName = file.split('.')[0];
+            const filePath = `${sourcePath}/${file}`;
+            const fileBuffer = fs.readFileSync(filePath);
+            const fileStats = fs.statSync(filePath);
+            
+            // console.log(file, formatBytes(fileStats.size), fileBuffer);
+
+            if (file != '.DS_Store') { //FIXME: check for images
+                sharp(fileBuffer)
+                .jpeg({
+                    quality: 90,
+                    chromaSubsampling: '4:2:0'
+                })
+                .resize(1500) //TODO: get size from % of source image width
+                .toFile(`${fileName}.jpg`, (err, info) => { //TODO: put processed files in a folder
+                    if (err)
+                        return console.log(`Unable to process file ${file}: ${err}`);
+    
+                    console.log(`Filename ${file}`);
+                    console.log(`${formatBytes(fileStats.size)} => ${formatBytes(info.size)} \n`);
+                });
+            }
         });
     } else {
         console.log('Folder is empty');
