@@ -17,8 +17,7 @@
   },
   "homepage": "https://github.com/enricozappa/custom-image-compressor#readme",
   "dependencies": {
-    "imagemin": "^8.0.1",
-    "imagemin-jpegtran": "^7.0.0",
+    "commander": "^9.0.0",
     "sharp": "^0.30.0"
   }
 }

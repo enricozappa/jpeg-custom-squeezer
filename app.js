@@ -1,8 +1,22 @@
 const path = require('path');
 const fs = require('fs');
 const sharp = require('sharp');
+const { program } = require('commander');
 
-// console.log(process.argv); //TODO: pass arguments from CLI
+// Set cli argumnents
+program
+    .option('-q, --quality <integer 1 to 10>', 'set jpeg quality, default value is 90')
+    .option('-ss, --subsampling', 'use chroma subsampling (less quality), disabled by default')
+    .option('-w, --width <integer>', 'set image pixel width, default value is 1500')
+
+program.parse();
+
+const options = program.opts();
+
+// Log parameters if any
+if (Object.keys(options).length) {
+    console.log('\x1b[35m%s\x1b[0m', '\nStarting with these settings =>', options);
+}
 
 // Get images path
 const sourcePath = path.join(__dirname, 'images');
@@ -11,7 +25,7 @@ const destinationPath = path.join(__dirname, 'output');
 // Read images path
 fs.readdir(sourcePath, (err, files) => {
     if (err)
-        return console.log(`Unable to scan directory: ${err}`);
+        return console.log('\x1b[31m%s\x1b[0m', `\nUnable to scan directory: ${err}`);
     
     // Parse files
     if (files.length) {
@@ -19,7 +33,7 @@ fs.readdir(sourcePath, (err, files) => {
         const images = Object.values(files).filter(file => file.split('.')[1] == 'jpg');
 
         if (images.length) {
-            console.log(`Processing ${images.length} files... \n`);
+            console.log('\x1b[36m%s\x1b[0m', `\nProcessing ${images.length} files... \n`);
 
             images.forEach(file => {
                 // Get file path, name, buffer and stats
@@ -31,23 +45,23 @@ fs.readdir(sourcePath, (err, files) => {
                 // Compress image
                 sharp(fileBuffer)
                 .jpeg({
-                    quality: 90,
-                    chromaSubsampling: '4:2:0'
+                    quality: options.quality ? Number(options.quality) : 90,
+                    chromaSubsampling: options.subsampling ? '4:2:0' : '4:4:4'
                 })
-                .resize(1400) //TODO: get size from % of source image width
+                .resize(options.width ? Number(options.width): 1500)
                 .toFile(`${destinationPath}/${fileName}.jpg`, (err, info) => {
                     if (err)
-                        return console.log(`Unable to process file ${file}: ${err}`);
+                        return console.log('\x1b[31m%s\x1b[0m', `Unable to process file ${file}: ${err}`);
     
-                    console.log(`Filename: ${file}`);
-                    console.log(`${formatBytes(fileStats.size)} => ${formatBytes(info.size)} \n`);
+                    console.log('\x1b[34m%s\x1b[0m', `Filename: ${file}`);
+                    console.log('\x1b[32m%s\x1b[0m',`${formatBytes(fileStats.size)} => ${formatBytes(info.size)} \n`);
                 });
             });
         } else {
-            console.log('\nNo jpegs found \n');
+            console.log('\x1b[33m%s\x1b[0m', '\nNo jpegs found \n');
         }
     } else {
-        console.log('\nImages folder is empty \n');
+        console.log('\x1b[33m%s\x1b[0m', '\nImages folder is empty \n');
     }
 });
 
