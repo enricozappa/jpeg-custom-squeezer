@@ -9,6 +9,8 @@ How to use:
 4. Put uncompressed jpegs inside **images** folder.
 5. Launch `node app.js` from the command line.
 
+Type `node app.js -h` for help.
+
 Compressed images will be available inside the folder **output**.
 
 This script uses the module [Sharp](https://www.npmjs.com/package/sharp) to process images.
