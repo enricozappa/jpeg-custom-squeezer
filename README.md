@@ -1,5 +1,5 @@
 # custom-jpeg-compressor
-I'm developing this image compressor (actually works only with jpegs) for educational purposes and to automate the process of uploading photos to my [personal photography site](https://enricozappala.com/).
+Simple nodeJS image compressor (works only with jpegs) done for educational purposes.
 
 How to use:
 
