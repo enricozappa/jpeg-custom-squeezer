@@ -3,7 +3,7 @@ const fs = require('fs');
 const sharp = require('sharp');
 const { program } = require('commander');
 
-// Set cli argumnents
+// Set cli parameters
 program
     .option('-q, --quality <integer 1 to 100>', 'set jpeg quality, default value is 90')
     .option('-ss, --subsampling', 'use chroma subsampling (less quality), disabled by default')
