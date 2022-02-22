@@ -5,7 +5,7 @@ const { program } = require('commander');
 
 // Set cli argumnents
 program
-    .option('-q, --quality <integer 1 to 10>', 'set jpeg quality, default value is 90')
+    .option('-q, --quality <integer 1 to 100>', 'set jpeg quality, default value is 90')
     .option('-ss, --subsampling', 'use chroma subsampling (less quality), disabled by default')
     .option('-w, --width <integer>', 'set image pixel width, default value is 1500')
 
