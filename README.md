@@ -1,5 +1,5 @@
 # custom-jpeg-compressor
-Simple nodeJS image compressor (works only with jpegs) done for educational purposes.
+Simple nodeJS synchronous image compressor (works only with jpegs) done for educational purposes.
 
 ![](https://media.giphy.com/media/Vcq7QTUQRggRq5mAV8/giphy.gif)
 
