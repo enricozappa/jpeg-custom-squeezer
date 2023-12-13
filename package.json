@@ -18,6 +18,6 @@
   "homepage": "https://github.com/enricozappa/custom-image-compressor#readme",
   "dependencies": {
     "commander": "^9.0.0",
-    "sharp": "^0.30.0"
+    "sharp": "^0.32.6"
   }
 }
