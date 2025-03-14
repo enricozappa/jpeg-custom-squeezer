@@ -1,5 +1,6 @@
-# custom-jpeg-compressor
-Simple nodeJS synchronous image compressor (works only with jpegs) done for educational purposes.
+# jpeg-custom-sqzr
+Simple nodeJS synchronous image squeezer (works only with jpegs) done for educational purposes.
+You can set desired output image width, quality and subsampling.
 
 ![](https://media.giphy.com/media/Vcq7QTUQRggRq5mAV8/giphy.gif)
 
